@@ -12,14 +12,10 @@ public class GameManager : MonoBehaviour
     private GameObject selectedShip;
     public static event Action<GameState> OnGameStateChanged;
 
-    /// <summary>
-    /// private constructor so other classes won't be able to instantiate this class
-    /// </summary>
+    // private constructor so other classes won't be able to instantiate this class
     private GameManager() { }
 
-    /// <summary>
-    /// Possible states within the game
-    /// </summary>
+    // Possible states within the game
     public enum GameState
     {
         TitleScreen,
@@ -27,17 +23,13 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
-    /// <summary>
-    /// Sets game state to title screen
-    /// </summary>
+    // Sets game state to title screen
     void Start()
     {
         UpdateGameState(GameState.TitleScreen);
     }
 
-    /// <summary>
-    /// Destroy Duplicate GameManager Object
-    /// </summary>
+    // Destroy Duplicate GameManager Object
     void Awake()
     {
         GameObject[] gameManagers = GameObject.FindGameObjectsWithTag("GameManager");
@@ -55,10 +47,7 @@ public class GameManager : MonoBehaviour
         return state;
     }
 
-    /// <summary>
-    /// Updates game state
-    /// </summary>
-    /// <param name="newState"></param>
+    // Updates game state
     public void UpdateGameState(GameState newState)
     {
         state = newState;
@@ -78,10 +67,7 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
 
-    /// <summary>
-    /// Since the object is a singleton, returns itself
-    /// </summary>
-    /// <returns> this </returns>
+    // Since the object is a singleton, returns itself
     public static GameManager getInstance ()
     {
         if (singleton == null)

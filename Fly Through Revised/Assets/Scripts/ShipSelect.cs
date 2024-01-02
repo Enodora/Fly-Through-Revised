@@ -51,6 +51,10 @@ public class ShipSelect : MonoBehaviour
             mainShip.tag = "Player";
             rightShip.tag = "Unselected";
 
+            leftShip.transform.GetChild(0).gameObject.GetComponent<Animator>().enabled = false;
+            mainShip.transform.GetChild(0).gameObject.GetComponent<Animator>().enabled = true;
+            rightShip.transform.GetChild(0).gameObject.GetComponent<Animator>().enabled = false;
+
             mainShip.gameObject.transform.localScale = new Vector3(153.96f, 153.96f, 153.96f);
             leftShip.gameObject.transform.localScale = new Vector3(123.168f, 123.168f, 123.168f);
             rightShip.gameObject.transform.localScale = new Vector3(123.168f, 123.168f, 123.168f);
