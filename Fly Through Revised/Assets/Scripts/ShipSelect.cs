@@ -64,7 +64,6 @@ public class ShipSelect : MonoBehaviour
         } else if (GameManager.getInstance().getCurrentState() == GameManager.GameState.Game)
         {
             mainShip.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-            Debug.Log("Running");
         }
     }
 
