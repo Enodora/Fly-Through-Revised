@@ -8,9 +8,7 @@ public class LvlController : MonoBehaviour
     private GameObject[] levelButtons;
     private GameObject[] threeStars;
 
-    private int highestLevel = 1;
     private int[,] collectedStars;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -33,15 +31,16 @@ public class LvlController : MonoBehaviour
             {PlayerPrefs.GetInt("Level12First", 0), PlayerPrefs.GetInt("Level12Middle", 0),PlayerPrefs.GetInt("Level12Last", 0)}, //Level12
         };
 
-        highestLevel = PlayerPrefs.GetInt("LevelUnlocked", 1);
 
-        for (int i = highestLevel; i <= 11; i++)
+        for (int i = GameManager.highestLevel; i <= 11; i++)
         {
             levelButtons[i].GetComponent<Button>().interactable = false;
             levelButtons[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             levelButtons[i].transform.GetChild(1).gameObject.SetActive(true);
+
+            levelButtons[i].GetComponent<Button>().interactable = false;
         }
-        for (int i = 0; i < highestLevel; i++)
+        for (int i = 0; i < GameManager.highestLevel; i++)
         {
             //Left Stars
             if (collectedStars[i, 0] == 1)

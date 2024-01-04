@@ -8,9 +8,12 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager singleton;
 
-    private GameState state;
-    private GameObject selectedShip;
+    private static GameState state;
     public static event Action<GameState> OnGameStateChanged;
+
+    [HideInInspector] public static int selectedLevel;
+    [HideInInspector] public GameObject selectedShip;
+    [HideInInspector] public static int highestLevel = 1;
 
     // private constructor so other classes won't be able to instantiate this class
     private GameManager() { }
@@ -26,12 +29,14 @@ public class GameManager : MonoBehaviour
     // Sets game state to title screen
     void Start()
     {
-        UpdateGameState(GameState.TitleScreen);
+        getInstance().UpdateGameState(GameState.TitleScreen);
     }
 
     // Destroy Duplicate GameManager Object
     void Awake()
     {
+        highestLevel = PlayerPrefs.GetInt("LevelUnlocked", 1);
+
         GameObject[] gameManagers = GameObject.FindGameObjectsWithTag("GameManager");
 
         if (gameManagers.Length > 1)

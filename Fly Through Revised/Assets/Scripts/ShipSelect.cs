@@ -35,7 +35,7 @@ public class ShipSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!gm.isTransitionTime())
+        if (GameManager.getInstance().getCurrentState() == GameManager.GameState.TitleScreen)
         {
             if (rightClicked)
                 actionRightArrow();
@@ -61,6 +61,10 @@ public class ShipSelect : MonoBehaviour
 
             rightClicked = false;
             leftClicked = false;
+        } else if (GameManager.getInstance().getCurrentState() == GameManager.GameState.Game)
+        {
+            mainShip.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            Debug.Log("Running");
         }
     }
 

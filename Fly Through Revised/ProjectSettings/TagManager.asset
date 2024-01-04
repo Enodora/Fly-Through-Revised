@@ -8,6 +8,7 @@ TagManager:
   - Unselected
   - LevelButton
   - ThreeStars
+  - MenuButton
   layers:
   - Default
   - TransparentFX
