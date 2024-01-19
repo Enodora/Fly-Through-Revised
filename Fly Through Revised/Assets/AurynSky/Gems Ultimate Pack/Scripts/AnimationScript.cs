@@ -27,8 +27,8 @@ public class AnimationScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        this.gameObject.transform.localScale = startScale;
+    }
 	
 	// Update is called once per frame
 	void Update () {

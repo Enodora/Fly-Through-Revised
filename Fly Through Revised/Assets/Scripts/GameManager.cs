@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager singleton;
+    public static GameManager instance { get; private set; }
 
-    private static GameState state;
-    public static event Action<GameState> OnGameStateChanged;
+    private GameState state;
+    //public static event Action<GameState> OnGameStateChanged;
 
-    [HideInInspector] public static int selectedLevel;
-    [HideInInspector] public GameObject selectedShip;
-    [HideInInspector] public static int highestLevel = 1;
+    public GameObject selectedShipPrefab;
+    [HideInInspector] public int selectedLevel;
+    [HideInInspector] public int highestLevel = 1;
 
     // private constructor so other classes won't be able to instantiate this class
     private GameManager() { }
@@ -22,16 +22,26 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         TitleScreen,
+        Transition,
+        MoveForward,
         Game,
+        Paused,
+        LevelClear,
         GameOver
     }
 
     // Sets game state to title screen
     void Start()
     {
-        getInstance().UpdateGameState(GameState.TitleScreen);
+        if (SceneManager.GetActiveScene().name == "TitleScene")
+        {
+            UpdateGameState(GameState.TitleScreen);
+        } else
+        {
+            UpdateGameState(GameState.Game);
+        }
+        
     }
-
     // Destroy Duplicate GameManager Object
     void Awake()
     {
@@ -39,9 +49,12 @@ public class GameManager : MonoBehaviour
 
         GameObject[] gameManagers = GameObject.FindGameObjectsWithTag("GameManager");
 
-        if (gameManagers.Length > 1)
+        if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(this);
+        } else
+        {
+            instance = this;
         }
 
         DontDestroyOnLoad(this.gameObject);
@@ -63,32 +76,20 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Game:
                 break;
+            case GameState.LevelClear:
+                break;
             case GameState.GameOver:
+                break;
+            case GameState.Transition:
+                break;
+            case GameState.MoveForward:
+                break;
+            case GameState.Paused:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
-        OnGameStateChanged?.Invoke(newState);
-    }
-
-    // Since the object is a singleton, returns itself
-    public static GameManager getInstance ()
-    {
-        if (singleton == null)
-        {
-            singleton = new GameManager();
-        }
-        return singleton;
-    }
-
-    public void setSelectedShip(GameObject ship)
-    {
-        selectedShip = ship;
-    }
-
-    public GameObject getSelectedShip()
-    {
-        return selectedShip;
+        //OnGameStateChanged?.Invoke(newState);
     }
 }

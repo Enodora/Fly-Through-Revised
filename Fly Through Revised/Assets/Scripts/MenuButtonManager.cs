@@ -23,10 +23,10 @@ public class MenuButtonManager : MonoBehaviour
 
     void Start()
     {
-        menuAnim = GameObject.Find("RightPiviot").GetComponent<Animator>();
+        menuAnim = GameObject.Find("Parent").GetComponent<Animator>();
         portalAnim = GameObject.Find("Portal blue (Entrance)").GetComponent<Animator>();
 
-        choseLevel(GameManager.highestLevel);
+        choseLevel(GameManager.instance.highestLevel, false);
     }
 
     public void pressedPlay()
@@ -34,7 +34,8 @@ public class MenuButtonManager : MonoBehaviour
         shipAnim = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject.GetComponent<Animator>();
         shipAnim.SetBool("Play", true);
 
-        GameManager.getInstance().UpdateGameState(GameManager.GameState.Game);
+        GameManager.instance.UpdateGameState(GameManager.GameState.Transition);
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedSettings()
@@ -42,6 +43,8 @@ public class MenuButtonManager : MonoBehaviour
         currentMenu = MenuState.Settings;
         menuAnim.SetBool("Settings", true);
         portalAnim.SetBool("Close", true);
+
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedCredit()
@@ -49,6 +52,8 @@ public class MenuButtonManager : MonoBehaviour
         currentMenu = MenuState.Credit;
         menuAnim.SetBool("Credit", true);
         portalAnim.SetBool("Close", true);
+
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedLevels()
@@ -56,16 +61,22 @@ public class MenuButtonManager : MonoBehaviour
         currentMenu = MenuState.Levels;
         menuAnim.SetBool("Levels", true);
         portalAnim.SetBool("Close", true);
+
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedRightShip()
     {
         ShipSelect.rightClicked = true;
+
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedLeftShip()
     {
         ShipSelect.leftClicked = true;
+        
+        AudioManager.instance.buttonSFX();
     }
 
     public void pressedBack()
@@ -91,13 +102,20 @@ public class MenuButtonManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(currentMenu), currentMenu, null);
         }
+
+        AudioManager.instance.buttonSFX();
     }
 
     public void choseLevel(int levelNum)
     {
-        GameManager.selectedLevel = levelNum; 
-        levelLabel.text = "Level: " + GameManager.selectedLevel;
+        GameManager.instance.selectedLevel = levelNum; 
+        levelLabel.text = "Level: " + GameManager.instance.selectedLevel;
 
         pressedBack();
+    }
+    public void choseLevel(int levelNum, bool makeSound)
+    {
+        GameManager.instance.selectedLevel = levelNum;
+        levelLabel.text = "Level: " + GameManager.instance.selectedLevel;
     }
 }

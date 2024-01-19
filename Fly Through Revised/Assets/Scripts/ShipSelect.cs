@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ShipSelect : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class ShipSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.getInstance().getCurrentState() == GameManager.GameState.TitleScreen)
+        if (GameManager.instance.getCurrentState() == GameManager.GameState.TitleScreen)
         {
             if (rightClicked)
                 actionRightArrow();
@@ -61,8 +62,19 @@ public class ShipSelect : MonoBehaviour
 
             rightClicked = false;
             leftClicked = false;
-        } else if (GameManager.getInstance().getCurrentState() == GameManager.GameState.Game)
+
+            //GameManager.instance.selectedShipPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(selectedShip.element);
+        } else if (GameManager.instance.getCurrentState() == GameManager.GameState.Transition)
         {
+            foreach (GameObject ship in ships)
+            {
+                if (ship.name + "(Clone)" == mainShip.name)
+                {
+                    GameManager.instance.selectedShipPrefab = ship;
+                    Debug.Log("Now: " + ship.name);
+                }
+            }
+
             mainShip.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
     }

@@ -23,8 +23,4 @@ public class CircularDoublyLinkedList : MonoBehaviour
         }
         size++;
     }
-    public void a(GameObject test)
-    {
-        Debug.Log(test.name);
-    }
 }

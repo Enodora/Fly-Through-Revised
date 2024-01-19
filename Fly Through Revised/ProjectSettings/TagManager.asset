@@ -9,6 +9,10 @@ TagManager:
   - LevelButton
   - ThreeStars
   - MenuButton
+  - Entrance
+  - Obstacle
+  - Goal
+  - Star
   layers:
   - Default
   - TransparentFX

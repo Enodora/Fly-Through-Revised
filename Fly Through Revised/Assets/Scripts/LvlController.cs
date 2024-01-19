@@ -32,7 +32,7 @@ public class LvlController : MonoBehaviour
         };
 
 
-        for (int i = GameManager.highestLevel; i <= 11; i++)
+        for (int i = GameManager.instance.highestLevel; i <= 11; i++)
         {
             levelButtons[i].GetComponent<Button>().interactable = false;
             levelButtons[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
@@ -40,7 +40,7 @@ public class LvlController : MonoBehaviour
 
             levelButtons[i].GetComponent<Button>().interactable = false;
         }
-        for (int i = 0; i < GameManager.highestLevel; i++)
+        for (int i = 0; i < GameManager.instance.highestLevel; i++)
         {
             //Left Stars
             if (collectedStars[i, 0] == 1)
